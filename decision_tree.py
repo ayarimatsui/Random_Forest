@@ -2,7 +2,7 @@
 import random
 import collections
 import numpy as np
-from scipy.stats import mode  #最頻値を求めるのに使うらしい
+from scipy.stats import mode  #最頻値を求めるのに使う
 
 # 決定木のノード
 class Node(object):
