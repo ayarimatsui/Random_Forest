@@ -167,8 +167,8 @@ def visualize(max_depth=None):
     clf.fit(petal_features, targets)
 
     # データの取りうる範囲 +-1 を計算する
-    x_min = petal_features[:, 0].min() - 1
-    y_min = petal_features[:, 1].min() - 1
+    x_min = max(0, petal_features[:, 0].min() - 1)
+    y_min = max(0, petal_features[:, 1].min() - 1)
     x_max = petal_features[:, 0].max() + 1
     y_max = petal_features[:, 1].max() + 1
 
@@ -193,11 +193,11 @@ def visualize(max_depth=None):
     plt.ylabel(feature_names[3])
     if max_depth is None:
         plt.title('Max Depth : No Limitation')
-        plt.show()
+        #plt.show()
         plt.savefig('figures/Decision_Tree_no_limit.png')
     else:
         plt.title('Max Depth : ' + str(max_depth))
-        plt.show()
+        #plt.show()
         plt.savefig('figures/Decision_Tree_depth_{}.png'.format(max_depth))
 
 
@@ -215,4 +215,4 @@ if __name__ == '__main__':
     print('accuracy : {:.4f}'.format(accuracy))
 
     # 引数は決定木の深さの制限
-    visualize()
+    visualize(6)
