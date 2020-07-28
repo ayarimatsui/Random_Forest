@@ -21,7 +21,7 @@ class Node(object):
 # 決定木による分類器
 class DecisionTreeClassifier():
 
-    def __init__(self, max_features=lambda n: n, max_depth=10):
+    def __init__(self, max_features=lambda n: n, max_depth=float('inf')):
         # max_features : データの特徴量の数
         self.max_features = max_features
         # max_depth : 決定木の深さの制限
@@ -151,14 +151,68 @@ class DecisionTreeClassifier():
         return accuracy
 
 
+# 2次元で図示 (Petal lengthをx軸、Petal widthをy軸として表示)
+# 使用する特徴量も2つになる点には注意
+def visualize(max_depth=None):
+    iris_dataset = datasets.load_iris()
+    petal_features = iris_dataset['data'][:, 2:]
+    targets = iris_dataset['target']
+
+    if max_depth is None:
+        # 決定木の最大深度は制限しない
+        clf = DecisionTreeClassifier()
+    else:
+        clf = DecisionTreeClassifier(max_depth=max_depth)
+    
+    clf.fit(petal_features, targets)
+
+    # データの取りうる範囲 +-1 を計算する
+    x_min = petal_features[:, 0].min() - 1
+    y_min = petal_features[:, 1].min() - 1
+    x_max = petal_features[:, 0].max() + 1
+    y_max = petal_features[:, 1].max() + 1
+
+    # 教師データの取りうる範囲でメッシュ状の座標を作る
+    grid_interval = 0.2
+    xx, yy = np.meshgrid(
+        np.arange(x_min, x_max, grid_interval),
+        np.arange(y_min, y_max, grid_interval))
+
+    # メッシュの座標を学習したモデルで判定させる
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    # 各点の判定結果をグラフに描画する
+    plt.contourf(xx, yy, Z.reshape(xx.shape), cmap=plt.cm.rainbow, alpha=0.4)
+
+    # データもプロット
+    for c in np.unique(targets):
+        plt.scatter(petal_features[targets == c, 0],
+                    petal_features[targets == c, 1])
+
+    feature_names = iris_dataset['feature_names']
+    plt.xlabel(feature_names[2])
+    plt.ylabel(feature_names[3])
+    if max_depth is None:
+        plt.title('Max Depth : No Limitation')
+        plt.show()
+        plt.savefig('figures/Decision_Tree_no_limit.png')
+    else:
+        plt.title('Max Depth : ' + str(max_depth))
+        plt.show()
+        plt.savefig('figures/Decision_Tree_depth_{}.png'.format(max_depth))
+
+
 
 if __name__ == '__main__':
     iris_dataset = datasets.load_iris()
     X_train, X_test, y_train, y_test = train_test_split(iris_dataset['data'], iris_dataset['target'], test_size=0.25,  random_state=0)
 
+    # 全ての特徴量を使用したときの精度を調べる
     decision_tree = DecisionTreeClassifier()
     decision_tree.fit(X_train, y_train)
 
     accuracy = decision_tree.accuracy_score(X_test, y_test)
 
-    print('accuracy : {}'.format(accuracy))
+    print('accuracy : {:.4f}'.format(accuracy))
+
+    # 引数は決定木の深さの制限
+    visualize()
