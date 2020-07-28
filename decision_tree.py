@@ -22,7 +22,7 @@ class Node(object):
 class DecisionTreeClassifier():
 
     def __init__(self, max_features=lambda n: n, max_depth=float('inf')):
-        # max_features : データの特徴量の数
+        # max_features : 使用するデータの特徴量の数
         self.max_features = max_features
         # max_depth : 決定木の深さの制限
         self.max_depth = max_depth
@@ -30,7 +30,7 @@ class DecisionTreeClassifier():
 
 
     def fit(self, X, y):
-        features_num = X.shape[1]
+        features_num = X.shape[1]  # 入力のデータの特徴量の数
         sub_features_num = int(self.max_features(features_num))
         feature_ids = random.sample(range(features_num), sub_features_num)
         
@@ -194,7 +194,7 @@ def visualize(max_depth=None):
     if max_depth is None:
         plt.title('Max Depth : No Limitation')
         #plt.show()
-        plt.savefig('figures/Decision_Tree_no_limit.png')
+        plt.savefig('figures/Decision_Tree_no_limit_1.png')
     else:
         plt.title('Max Depth : ' + str(max_depth))
         #plt.show()
@@ -202,7 +202,7 @@ def visualize(max_depth=None):
 
 
 
-if __name__ == '__main__':
+def main():
     iris_dataset = datasets.load_iris()
     X_train, X_test, y_train, y_test = train_test_split(iris_dataset['data'], iris_dataset['target'], test_size=0.25,  random_state=0)
 
@@ -215,4 +215,9 @@ if __name__ == '__main__':
     print('accuracy : {:.4f}'.format(accuracy))
 
     # 引数は決定木の深さの制限
-    visualize(6)
+    visualize()
+
+
+
+if __name__ == '__main__':
+    main()
