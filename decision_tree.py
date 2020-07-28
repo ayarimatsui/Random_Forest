@@ -2,7 +2,10 @@
 import random
 import collections
 import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import datasets
 from scipy.stats import mode  #最頻値を求めるのに使う
+from sklearn.model_selection import train_test_split
 
 # 決定木のノード
 class Node(object):
@@ -41,7 +44,7 @@ class DecisionTreeClassifier():
         for i in range(N):
             node = self.trunk
             while isinstance(node, Node):  # nodeがNode型かどうかを判定
-                if X[i][node.feature_index] <= node.threshold:
+                if X[i][node.feature_id] <= node.threshold:
                     node = node.branch_true
                 else:
                     node = node.branch_false
@@ -134,3 +137,28 @@ class DecisionTreeClassifier():
         return Node(feature_id, threshold, branch_true, branch_false)
 
 
+    # 精度accuracyを計算
+    def accuracy_score(self, X, y):
+        y_predict = self.predict(X)
+        N = len(y)
+        correct = 0
+        for i in range(N):
+            if y_predict[i] == y[i]:
+                correct = correct + 1
+
+        accuracy = correct / N
+
+        return accuracy
+
+
+
+if __name__ == '__main__':
+    iris_dataset = datasets.load_iris()
+    X_train, X_test, y_train, y_test = train_test_split(iris_dataset['data'], iris_dataset['target'], test_size=0.25,  random_state=0)
+
+    decision_tree = DecisionTreeClassifier()
+    decision_tree.fit(X_train, y_train)
+
+    accuracy = decision_tree.accuracy_score(X_test, y_test)
+
+    print('accuracy : {}'.format(accuracy))
