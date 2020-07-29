@@ -204,7 +204,7 @@ def visualize(max_depth=None):
 
 def main():
     iris_dataset = datasets.load_iris()
-    X_train, X_test, y_train, y_test = train_test_split(iris_dataset['data'], iris_dataset['target'], test_size=0.25,  random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(iris_dataset['data'], iris_dataset['target'], test_size=0.3,  random_state=0)
 
     # 全ての特徴量を使用したときの精度を調べる
     decision_tree = DecisionTreeClassifier()
