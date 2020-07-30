@@ -21,7 +21,7 @@ class Node(object):
 # 決定木による分類器
 class DecisionTreeClassifier():
 
-    def __init__(self, max_features=lambda n: n, max_depth=float('inf')):
+    def __init__(self, max_features=lambda n: n, max_depth=float('inf')):  # max_depthは、ハイパーパラメータ
         # max_features : 使用するデータの特徴量の数
         self.max_features = max_features
         # max_depth : 決定木の深さの制限
