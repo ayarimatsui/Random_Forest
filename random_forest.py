@@ -12,7 +12,7 @@ from decision_tree import DecisionTreeClassifier
 # ランダムフォレスト
 class RandomForestClassifier():
    
-    def __init__(self, trees_num=64, features_num=np.sqrt, max_depth=float('inf'), bootstrap=0.9):  # trees_num, features_num, max_depth, bootstrapはハイパーパラメータ
+    def __init__(self, trees_num=64, features_num=np.sqrt, max_depth=float('inf'), bootstrap=0.9):  # trees_num, (features_num,) max_depth, bootstrapはハイパーパラメータ
         # trees_num : ランダムフォレストに含まれる決定木の数
         self.trees_num = trees_num
         # features_num : 各分岐でランダムに選択する特徴量の数
