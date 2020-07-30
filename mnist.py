@@ -87,6 +87,7 @@ def compare_depth():
     plt.xlabel('Max Depth')
     plt.ylabel('Accuracy')
     plt.xlim(0, 20)
+    plt.ylim(0, 1.0)
     plt.legend(loc='lower right')
     plt.title('Max Depth of Decision Trees and Accuracy')
     # グラフを保存
