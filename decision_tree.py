@@ -202,12 +202,20 @@ def visualize(max_depth=None):
 
 
 
-def main():
-    iris_dataset = datasets.load_iris()
-    X_train, X_test, y_train, y_test = train_test_split(iris_dataset['data'], iris_dataset['target'], test_size=0.3,  random_state=0)
+def main(data_name):  # 引数はデータセットの種類で、'iris'か'mnist'のどちらか
+    # アヤメのデータセットまたはMNISTのデータセットの読み込み
+    if data_name == 'iris':
+        dataset = datasets.load_iris()
+    elif data_name == 'mnist':
+        dataset = datasets.load_digits()
+    else:
+        print('データセットは、iris または mnist を入力してください')
+        sys.exit()
+    
+    X_train, X_test, y_train, y_test = train_test_split(dataset['data'], dataset['target'], test_size=0.3,  random_state=0)
 
     # 全ての特徴量を使用したときの精度を調べる
-    decision_tree = DecisionTreeClassifier()
+    decision_tree = DecisionTreeClassifier(max_depth=5)
     decision_tree.fit(X_train, y_train)
 
     accuracy = decision_tree.accuracy_score(X_test, y_test)
@@ -220,4 +228,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    data_name = input('データセットを入力 (iris / mnist): ')
+    main(data_name)
+    if data_name == 'iris':
+        visualize()
