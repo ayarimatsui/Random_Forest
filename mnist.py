@@ -1,6 +1,7 @@
 # 決定木とランダムフォレストの性能を、MNISTのデータセットで比較
 
 import time
+import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import datasets
 from tqdm import tqdm
@@ -87,6 +88,7 @@ def compare_depth():
     plt.xlabel('Max Depth')
     plt.ylabel('Accuracy')
     plt.xlim(0, 20)
+    plt.xticks(np.arange(0, 21, 2))
     plt.ylim(0, 1.0)
     plt.legend(loc='lower right')
     plt.title('Max Depth of Decision Trees and Accuracy')
