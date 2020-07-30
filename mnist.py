@@ -84,7 +84,7 @@ def compare_depth():
     plt.plot(depth_list, rf_train_acc_list, label='Random Forest - train accuracy', color='y')
     plt.plot(depth_list, rf_test_acc_list, label='Random Forest - test accuracy', color='b')
 
-    plt.xlable('Max Depth')
+    plt.xlabel('Max Depth')
     plt.ylabel('Accuracy')
     plt.xlim(0, 21)
     plt.title('Max Depth of Decision Trees and Accuracy')
