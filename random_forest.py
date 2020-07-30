@@ -1,5 +1,6 @@
 # ランダムフォレストの実装
 
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import mode
@@ -71,6 +72,7 @@ class RandomForestClassifier():
 
 # 2次元で図示 (Petal lengthをx軸、Petal widthをy軸として表示)
 # 使用する特徴量も2つになる点には注意
+# iris dataset の場合のみ有効
 def visualize(max_depth=None):
     iris_dataset = datasets.load_iris()
     petal_features = iris_dataset['data'][:, 2:]
@@ -120,11 +122,19 @@ def visualize(max_depth=None):
 
 
 
-def main():
-    iris_dataset = datasets.load_iris()
-    X_train, X_test, y_train, y_test = train_test_split(iris_dataset['data'], iris_dataset['target'], test_size=0.3,  random_state=0)
+def main(data_name): # 引数はデータセットの種類で、'iris'か'mnist'のどちらか
+    # アヤメのデータセットまたはMNISTのデータセットを読み込み
+    if data_name == 'iris':
+        dataset = datasets.load_iris()
+    elif data_name == 'mnist':
+        dataset = datasets.load_digits()
+    else:
+        print('データセットは、iris または mnist を入力してください')
+        sys.exit()
 
-    random_forest = RandomForestClassifier()
+    X_train, X_test, y_train, y_test = train_test_split(dataset['data'], dataset['target'], test_size=0.3,  random_state=0)
+
+    random_forest = RandomForestClassifier(max_depth=5)
     random_forest.fit(X_train, y_train)
 
     accuracy = random_forest.accuracy_score(X_test, y_test)
@@ -136,5 +146,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
-    visualize()
+    data_name = input('データセットを入力 (iris / mnist): ')
+    main(data_name)
+    if data_name == 'iris':
+        visualize()
