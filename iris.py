@@ -64,6 +64,8 @@ def visualize(model, max_depth=None):
     else:
         plt.title('Max Depth : ' + str(max_depth))
         plt.savefig('figures/iris/{}_depth_{}.png'.format(model, max_depth))
+    
+    plt.close()
 
 
 
@@ -116,27 +118,27 @@ if __name__ == '__main__':
 実行例
 
 ######### max_depth = 1 #########
-決定木       学習時間 : 0.021221 [sec]     推論時間 : 0.000036 [sec]
+決定木       学習時間 : 0.023763 [sec]     推論時間 : 0.000032 [sec]
 決定木       train accuracy : 0.6952     test_accuracy : 0.6000
-ランダムフォレスト       学習時間 : 0.612986 [sec]     推論時間 : 0.003086 [sec]
+ランダムフォレスト       学習時間 : 0.587140 [sec]     推論時間 : 0.002891 [sec]
 ランダムフォレスト       train accuracy : 0.6952     test_accuracy : 0.6000
 
 ######### max_depth = 2 #########
-決定木       学習時間 : 0.038370 [sec]     推論時間 : 0.000053 [sec]
+決定木       学習時間 : 0.032260 [sec]     推論時間 : 0.000047 [sec]
 決定木       train accuracy : 0.9619     test_accuracy : 0.9111
-ランダムフォレスト       学習時間 : 0.982143 [sec]     推論時間 : 0.003865 [sec]
+ランダムフォレスト       学習時間 : 0.977927 [sec]     推論時間 : 0.004173 [sec]
 ランダムフォレスト       train accuracy : 0.9714     test_accuracy : 0.9556
 
 ######### max_depth = 3 #########
-決定木       学習時間 : 0.040380 [sec]     推論時間 : 0.000056 [sec]
+決定木       学習時間 : 0.042947 [sec]     推論時間 : 0.000059 [sec]
 決定木       train accuracy : 0.9810     test_accuracy : 0.9778
-ランダムフォレスト       学習時間 : 1.206527 [sec]     推論時間 : 0.004530 [sec]
+ランダムフォレスト       学習時間 : 1.216579 [sec]     推論時間 : 0.004688 [sec]
 ランダムフォレスト       train accuracy : 0.9714     test_accuracy : 0.9778
 
 ######### max_depth = None #########
-決定木       学習時間 : 0.043978 [sec]     推論時間 : 0.000058 [sec]
+決定木       学習時間 : 0.048637 [sec]     推論時間 : 0.000061 [sec]
 決定木       train accuracy : 1.0000     test_accuracy : 0.9778
-ランダムフォレスト       学習時間 : 1.477691 [sec]     推論時間 : 0.005911 [sec]
-ランダムフォレスト       train accuracy : 1.0000     test_accuracy : 0.9778
+ランダムフォレスト       学習時間 : 1.473939 [sec]     推論時間 : 0.006381 [sec]
+ランダムフォレスト       train accuracy : 1.0000     test_accuracy : 0.9333
 
 '''
