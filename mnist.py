@@ -101,6 +101,9 @@ def compare_depth():
 # 引数は、compare_depthの結果より決定
 def compare_performance(trees_num, max_depth, bootstrap):
 
+    dataset = datasets.load_digits()
+    X_train, X_test, y_train, y_test = train_test_split(dataset['data'], dataset['target'], test_size=0.3,  random_state=0)
+
     # 決定木
     print('#####　決定木の性能  #####')
     decision_tree = DecisionTreeClassifier(max_depth=max_depth)
@@ -117,7 +120,7 @@ def compare_performance(trees_num, max_depth, bootstrap):
 
     # ランダムフォレスト
     print('#####　ランダムフォレストの性能　#####')
-    random_forest = RandomForestClassifier(trees_num=trees_num, max_depth=depth, bootstrap=bootstrap)
+    random_forest = RandomForestClassifier(trees_num=trees_num, max_depth=max_depth, bootstrap=bootstrap)
     rf_lr_start = time.time()  # 学習開始時間を記録
     random_forest.fit(X_train, y_train)
     rf_lr_time = time.time() - rf_lr_start  # 学習時間
@@ -137,3 +140,17 @@ if __name__ == '__main__':
     # compare_depth()の実行結果より、
     # trees_num = 128, max_depth = 10, bootstrap = 0.5　に決定
     compare_performance(128, 10, 0.5)
+
+
+    '''
+    実行結果
+
+    #####　決定木の性能  #####
+    学習時間 : 8.753003 [sec]     推論時間 : 0.001576 [sec]
+    train accuracy : 1.0000     test_accuracy : 0.8667
+    
+    #####　ランダムフォレストの性能　#####
+    学習時間 : 72.597565 [sec]     推論時間 : 0.244916 [sec]
+    train accuracy : 1.0000     test_accuracy : 0.9444
+
+    '''
